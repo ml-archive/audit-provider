@@ -32,7 +32,7 @@ try Post.audit(user, event: .created, severity: .normal)
 or with a custom event:
 
 ```swift
-try Post.audit(user, event: "liked a post"))
+try Post.audit(user, event: "liked a post")
 ```
 
 There may be a time where you have an enumeration of custom events and you would like to use their identifiers in your report. Auditor makes this possible, just call the overload with the parameter `eventTypeId: UInt8`. 
@@ -84,13 +84,19 @@ For custom events, you have to define the message and the event's type's identif
 > *note*: values 0-4 are used by Audit. Use the values 5-255 if you want you want to be able to differentiate your severity levels from Audit's builtin levels.
 
 ## Custom audit description
+By default the generated messages use the model's `name`. If you wish to override this behaviour, you can conform to the protocol `AuditCustomDescribable`.
 ```swift
-public protocol AuditCustomDescribable {
-    static var auditDescription: String { get }
+extension Post: AuditCustomDescribable {
+    var auditDescription: String {
+        return "blog post"      
+    }
 }
+
+try Post.audit(user, event: .created) // Brett created a/an blog post
 ```
 
 ## Author
+In order to report events with your custom user model, you need to conform it to `Author`. `Author` is a simple protocol that just expects a name.
 ```swift
 public protocol Author: Model {
     var name: String { get }
