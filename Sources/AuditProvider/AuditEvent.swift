@@ -35,12 +35,27 @@ public final class AuditEvent: Model {
 
         try row.set("authorId", authorId)
         try row.set("eventTypeId", eventTypeId)
+        try row.set("severityTypeId", severityTypeId)
         try row.set("message", message)
 
         return row
     }
 }
-
+extension AuditEvent: NodeRepresentable {
+    public func makeNode(in context: Context?) throws -> Node {
+        return try makeRow().converted(to: Node.self)
+    }
+}
+extension AuditEvent: JSONRepresentable {
+    public func makeJSON() throws -> JSON {
+        return try makeRow().converted(to: JSON.self)
+    }
+}
+extension AuditEvent: ViewDataRepresentable {
+    public func makeViewData() throws -> ViewData {
+        return try makeRow().converted(to: ViewData.self)
+    }
+}
 extension AuditEvent: Timestampable {}
 extension AuditEvent: SoftDeletable {}
 extension AuditEvent: Preparation {
@@ -49,6 +64,7 @@ extension AuditEvent: Preparation {
             $0.id()
             $0.int("authorId")
             $0.custom("eventTypeId", type: "TINYINT UNSIGNED")
+            $0.custom("severityTypeId", type: "TINYINT UNSIGNED")
             $0.string("message", length: 191)
         }
     }
@@ -99,3 +115,4 @@ extension Audit.Severity {
         }
     }
 }
+
