@@ -1,8 +1,8 @@
 import XCTest
 
-@testable import Audit
+@testable import AuditProvider
 
-class AuditTests: XCTestCase {
+class AuditProviderTests: XCTestCase {
     func testBasic() {
     }
 }
