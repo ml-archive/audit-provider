@@ -113,4 +113,4 @@ The package owner for this project is [Brett](https://github.com/BrettRToomey).
 
 ## 📄 License
 
-This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
